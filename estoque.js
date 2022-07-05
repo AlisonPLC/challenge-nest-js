@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('./db');
+const Produto = require('./produtos');
 
 const Estoque = database.define('Estoque', {
   id: {
@@ -7,10 +8,6 @@ const Estoque = database.define('Estoque', {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
-  },
-  idProduto: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
   },
   quantidade: {
     type: Sequelize.INTEGER,
@@ -25,6 +22,15 @@ const Estoque = database.define('Estoque', {
     allowNull: false,
     //0 - Inativo / 1 - Ativo
   },
+});
+
+Estoque.belongsTo(Produto, {
+  constraint: true,
+  foreignKey: `idProduto`,
+});
+
+Categorias.hasMany(Produto, {
+  foreignKey: 'codigo',
 });
 
 module.exports = Estoque;

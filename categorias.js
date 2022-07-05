@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('./db');
+const Produto = require('./produtos');
 
 const Categorias = database.define('categorias', {
   id: {

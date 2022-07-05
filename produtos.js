@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('./db');
+const Categorias = require('./categorias');
 
 const Produto = database.define('produto', {
   id: {
@@ -8,11 +9,11 @@ const Produto = database.define('produto', {
     allowNull: false,
     primaryKey: true,
   },
-  idCategoria: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    //foreignKey: true,
-  },
+  // idCategoria: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   //foreignKey: true,
+  // },
   codigo: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -34,6 +35,15 @@ const Produto = database.define('produto', {
     allowNull: false,
     //0 - Inativo / 1 - Ativo
   },
+});
+
+Produto.belongsTo(Categorias, {
+  constraint: true,
+  foreignKey: `idCategoria`,
+});
+
+Categorias.hasMany(Produto, {
+  foreignKey: 'codigo',
 });
 
 module.exports = Produto;
